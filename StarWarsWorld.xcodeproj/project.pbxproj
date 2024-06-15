@@ -16,6 +16,7 @@
 		A51E292C2C1CE87600E32C4C /* StarWarsWorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51E292B2C1CE87600E32C4C /* StarWarsWorldTests.swift */; };
 		A51E29362C1CE87600E32C4C /* StarWarsWorldUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51E29352C1CE87600E32C4C /* StarWarsWorldUITests.swift */; };
 		A51E29382C1CE87600E32C4C /* StarWarsWorldUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51E29372C1CE87600E32C4C /* StarWarsWorldUITestsLaunchTests.swift */; };
+		A52FC3472C1E26DB0076407B /* StarWarsAPI in Frameworks */ = {isa = PBXBuildFile; productRef = A52FC3462C1E26DB0076407B /* StarWarsAPI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +50,6 @@
 		A51E29312C1CE87600E32C4C /* StarWarsWorldUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StarWarsWorldUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A51E29352C1CE87600E32C4C /* StarWarsWorldUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarWarsWorldUITests.swift; sourceTree = "<group>"; };
 		A51E29372C1CE87600E32C4C /* StarWarsWorldUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarWarsWorldUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		A51E29442C1CEF5600E32C4C /* LocalPackages */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LocalPackages; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A52FC3472C1E26DB0076407B /* StarWarsAPI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,11 +81,11 @@
 		A51E29082C1CE87500E32C4C = {
 			isa = PBXGroup;
 			children = (
-				A51E29442C1CEF5600E32C4C /* LocalPackages */,
 				A51E29132C1CE87500E32C4C /* StarWarsWorld */,
 				A51E292A2C1CE87600E32C4C /* StarWarsWorldTests */,
 				A51E29342C1CE87600E32C4C /* StarWarsWorldUITests */,
 				A51E29122C1CE87500E32C4C /* Products */,
+				A57337B62C1DB605006DF768 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -129,6 +130,13 @@
 			path = StarWarsWorldUITests;
 			sourceTree = "<group>";
 		};
+		A57337B62C1DB605006DF768 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -145,6 +153,9 @@
 			dependencies = (
 			);
 			name = StarWarsWorld;
+			packageProductDependencies = (
+				A52FC3462C1E26DB0076407B /* StarWarsAPI */,
+			);
 			productName = StarWarsWorld;
 			productReference = A51E29112C1CE87500E32C4C /* StarWarsWorld.app */;
 			productType = "com.apple.product-type.application";
@@ -621,6 +632,14 @@
 			relativePath = LocalPackages;
 		};
 /* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A52FC3462C1E26DB0076407B /* StarWarsAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A51E29452C1CEF9700E32C4C /* XCLocalSwiftPackageReference "LocalPackages" */;
+			productName = StarWarsAPI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A51E29092C1CE87500E32C4C /* Project object */;
 }

@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:LocalPackages">
+   </FileRef>
+   <FileRef
       location = "group:StarWarsWorld.xcodeproj">
    </FileRef>
 </Workspace>
