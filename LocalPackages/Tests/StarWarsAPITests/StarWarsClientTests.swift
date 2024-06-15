@@ -91,4 +91,20 @@ class StarWarsClientTests: XCTestCase {
             XCTAssertEqual(error.detail, "Not found")
         }
     }
+    
+    func testGetFilmsMultipleTimes() async throws {
+        let response1 = try await StarWarsClient.test.getFilms(1)
+        XCTAssertEqual(response1.count, 6)
+        XCTAssertNil(response1.next)
+        XCTAssertNil(response1.previous)
+        XCTAssertEqual(response1.results.count, 6)
+        
+        do {
+            _ = try await StarWarsClient.test.getFilms(2)
+            XCTFail("Above call should throw an error")
+        } catch let error as StarWarsClientError {
+            XCTAssertEqual(error.status, 404)
+            XCTAssertEqual(error.detail, "Not found")
+        }
+    }
 }

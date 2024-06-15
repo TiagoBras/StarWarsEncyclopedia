@@ -11,6 +11,8 @@ extension StarWarsClient {
         try responseFromFile("vehicles?page=\(page)", PaginatedResponse<Vehicle>.self)
     } getStarships: { page in
         try responseFromFile("starships?page=\(page)", PaginatedResponse<Starship>.self)
+    } getFilms: { page in
+        try responseFromFile("films?page=\(page)", PaginatedResponse<Film>.self)
     }
     
     /// Loads JSON response from local file and decodes it into `model`.

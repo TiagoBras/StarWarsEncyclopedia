@@ -6,4 +6,5 @@ public struct StarWarsClient {
     public var getSpecies: (_ page: Int) async throws -> PaginatedResponse<Species>
     public var getVehicles: (_ page: Int) async throws -> PaginatedResponse<Vehicle>
     public var getStarships: (_ page: Int) async throws -> PaginatedResponse<Starship>
+    public var getFilms: (_ page: Int) async throws -> PaginatedResponse<Film>
 }
