@@ -43,4 +43,20 @@ class StarWarsClientTests: XCTestCase {
             XCTAssertEqual(error.detail, "Not found")
         }
     }
+    
+    func testGetSpeciesMultipleTimes() async throws {
+        let response1 = try await StarWarsClient.test.getSpecies(2)
+        XCTAssertEqual(response1.count, 12)
+        XCTAssertNil(response1.next)
+        XCTAssertEqual(response1.previous, URL(string: "https://swapi.dev/api/species/?page=1"))
+        XCTAssertEqual(response1.results.count, 2)
+        
+        do {
+            _ = try await StarWarsClient.test.getSpecies(3)
+            XCTFail("Above call should throw an error")
+        } catch let error as StarWarsClientError {
+            XCTAssertEqual(error.status, 404)
+            XCTAssertEqual(error.detail, "Not found")
+        }
+    }
 }
