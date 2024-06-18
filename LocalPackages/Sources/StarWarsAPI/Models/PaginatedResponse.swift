@@ -1,6 +1,6 @@
 import Foundation
 
-public struct PaginatedResponse<Model: Decodable>: Decodable {
+public struct PaginatedResponse<Model: StarWarsModel>: Decodable, Sendable {
     public var count: Int
     public var next: URL?
     public var previous: URL?

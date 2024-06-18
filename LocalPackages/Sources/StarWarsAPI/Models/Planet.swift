@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Planet: Codable {
+public struct Planet: StarWarsModel {
     public let name: String
     public let rotationPeriod: String
     public let orbitalPeriod: String

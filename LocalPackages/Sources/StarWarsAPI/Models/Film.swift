@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Film: Codable {
+public struct Film: StarWarsModel {
     public let title: String
     public let episodeID: Int
     public let openingCrawl: String

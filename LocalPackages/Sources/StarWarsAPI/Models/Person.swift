@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Person: Codable {
+public struct Person: StarWarsModel {
     public let name: String
     public let height: String
     public let mass: String

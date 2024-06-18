@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Species: Codable {
+public struct Species: StarWarsModel {
     public let name: String
     public let classification: String
     public let designation: String
