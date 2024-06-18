@@ -46,6 +46,7 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = viewModel.title
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
@@ -55,6 +56,7 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
         ])
         
+        setupDataSource()
         setupViewModel()
     }
     
@@ -85,6 +87,32 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
         
     // MARK: - Private interface
     private func setupViewModel() {
+        viewModel.bindFields { items, isLoading, errorMessage in
+            items
+                .map { films in films.enumerated() }
+                .map { enumeratedFilms in enumeratedFilms.map { PaginatedListItem(id: $0.offset, model: $0.element) }}
+                .sink { [weak dataSource, maxDisplayedCellRow] films in
+                    var snapshot = NSDiffableDataSourceSnapshot<Section, PaginatedListItem<Model>>()
+                    snapshot.appendSections([.main])
+                    snapshot.appendItems(films, toSection: .main)
+                    
+                    guard let dataSource else {
+                        assertionFailure("DataSource should NOT be nil by now")
+                        return
+                    }
+                    
+                    // Don't animate during the first load
+                    dataSource.apply(snapshot, animatingDifferences: maxDisplayedCellRow > 0)
+                }
+                .store(in: &subscriptions)
+        }
+        
+        if !viewModel.hasLoadedAllItems() {
+            viewModel.fetchItems()
+        }
+    }
+    
+    private func setupDataSource() {
         let accessoryType: UITableViewCell.AccessoryType = onDidSelectItem != nil ? .disclosureIndicator : .none
         
         dataSource = UITableViewDiffableDataSource(tableView: tableView, cellProvider: { tableView, indexPath, item in
@@ -95,25 +123,5 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
             cell.accessoryType = accessoryType
             return cell
         })
-        
-        viewModel.bindFields { items, isLoading, errorMessage in
-            items
-                .map { films in films.enumerated() }
-                .map { enumeratedFilms in enumeratedFilms.map { PaginatedListItem(id: $0.offset, model: $0.element) }}
-                .sink { [weak dataSource] films in
-                    var snapshot = NSDiffableDataSourceSnapshot<Section, PaginatedListItem<Model>>()
-                    snapshot.appendSections([.main])
-                    snapshot.appendItems(films, toSection: .main)
-                    
-                    dataSource?.apply(snapshot, animatingDifferences: true)
-                }
-                .store(in: &subscriptions)
-        }
-        
-        if !viewModel.hasLoadedAllItems() {
-            viewModel.fetchItems()
-        }
-        
-        title = viewModel.title
     }
 }
