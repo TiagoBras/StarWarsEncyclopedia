@@ -27,9 +27,16 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
         tableView.register(PaginatedListCell<Model>.self, forCellReuseIdentifier: PaginatedListCell<Model>.identifier)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 78
-        tableView.tableFooterView = UIView()
+        tableView.tableFooterView = loadingIndicator
         tableView.delegate = self
         return tableView
+    }()
+    private lazy var loadingIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView(style: .medium)
+        activity.color = .gray
+        activity.hidesWhenStopped = true
+        activity.frame = CGRect(origin: .zero, size: .init(width: 60, height: 60))
+        return activity
     }()
     
     // MARK: - View Lifecycle
@@ -105,6 +112,15 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
                     dataSource.apply(snapshot, animatingDifferences: maxDisplayedCellRow > 0)
                 }
                 .store(in: &subscriptions)
+            
+            isLoading.sink { [weak loadingIndicator] isLoading in
+                if isLoading {
+                    loadingIndicator?.startAnimating()
+                } else {
+                    loadingIndicator?.stopAnimating()
+                }
+            }
+            .store(in: &subscriptions)
         }
         
         if !viewModel.hasLoadedAllItems() {
