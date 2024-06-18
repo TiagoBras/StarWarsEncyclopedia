@@ -9,7 +9,7 @@ public struct Species: StarWarsModel {
     public let hairColors: String
     public let eyeColors: String
     public let averageLifespan: String
-    public let homeworld: String
+    public let homeworld: URL?
     public let language: String
     public let people: [URL]
     public let films: [URL]

@@ -9,6 +9,7 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(name: "StarWarsAPI", targets: ["StarWarsAPI"]),
+        .library(name: "App", targets: ["App"]),
         .library(name: "DesignSystem", targets: ["DesignSystem"]),
     ],
     targets: [
@@ -28,5 +29,15 @@ let package = Package(
                 .process("Colors/Colors.xcassets")
             ]
         ),
+        .target(
+            name: "App",
+            dependencies: ["StarWarsAPI", "DesignSystem"],
+            swiftSettings: [
+                /// `targeted` or `complete`.
+                .enableExperimentalFeature("StrictConcurrency=complete")
+            ]),
+        .testTarget(
+            name: "AppTests",
+            dependencies: ["App"]),
     ]
 )
