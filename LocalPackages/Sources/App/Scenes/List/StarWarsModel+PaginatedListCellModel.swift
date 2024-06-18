@@ -1,5 +1,6 @@
 import UIKit
 import StarWarsAPI
+import Translations
 
 extension Film: PaginatedListCellModel {
     public static func specification() -> CellSpecification {
@@ -19,7 +20,48 @@ extension Film: PaginatedListCellModel {
     }
     
     public func textLabels() -> [String?] {
-        return [title, "Episode \(episodeID)", "Directed by \(director)", "Released on \(releaseDate)"]
+        return [
+            .tr.film.tvcell.title(title),
+            .tr.film.tvcell.episode(episodeID),
+            .tr.film.tvcell.director(director),
+            .tr.film.tvcell.released(releaseDate),
+        ]
+    }
+}
+
+extension Person: PaginatedListCellModel {
+    public static func specification() -> CellSpecification {
+        return CellSpecification(
+            rows: [
+                .init(
+                    columns: [
+                        .headlineLeft.update(\.hugging, .init(priority: .defaultHigh, axis: .horizontal)),
+                        .headlineLeft
+                    ],
+                    spacing: 4),
+                .init(columns: [.subheadlineLeft]),
+                .init(columns: [.subheadlineLeft, .subheadlineLeft], distribution: .fillEqually),
+            ],
+            spacing: 2
+        )
+    }
+    
+    public func textLabels() -> [String?] {
+        return [
+            name,
+            genderEmoji,
+            .tr.person.tvcell.yearOfBirth(birthYear),
+            .tr.person.tvcell.height(height),
+            .tr.person.tvcell.weight(mass),
+        ]
+    }
+    
+    var genderEmoji: String {
+        switch gender {
+        case "female": return "♀︎"
+        case "male": return "♂︎"
+        default: return ""
+        }
     }
 }
 

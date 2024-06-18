@@ -8,6 +8,7 @@ struct PaginatedListItem<Model: StarWarsModel>: Hashable {
 }
 
 class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewController, UITableViewDelegate {
+    public typealias OnDidSelectItem = (UIViewController, Model) -> Void
     
     // MARK: - Internal Models
     enum Section: CaseIterable {
@@ -16,6 +17,7 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
     
     // MARK: - Private properties
     private let viewModel: PaginatedListVM<Model>
+    private let onDidSelectItem: OnDidSelectItem?
     private var maxDisplayedCellRow = 0
     private var dataSource: UITableViewDiffableDataSource<Section, PaginatedListItem<Model>>!
     private var subscriptions = Set<AnyCancellable>()
@@ -24,14 +26,16 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(PaginatedListCell<Model>.self, forCellReuseIdentifier: PaginatedListCell<Model>.identifier)
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 78
         tableView.tableFooterView = UIView()
         tableView.delegate = self
         return tableView
     }()
     
     // MARK: - View Lifecycle
-    init(viewModel: PaginatedListVM<Model>) {
+    init(viewModel: PaginatedListVM<Model>, onDidSelectItem: OnDidSelectItem? = nil) {
         self.viewModel = viewModel
+        self.onDidSelectItem = onDidSelectItem
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -56,7 +60,11 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
     
     // MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("\(#function): \(indexPath)")
+        guard let model = dataSource.itemIdentifier(for: indexPath)?.model else { return }
+        
+        onDidSelectItem?(self, model)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -77,12 +85,14 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
         
     // MARK: - Private interface
     private func setupViewModel() {
+        let accessoryType: UITableViewCell.AccessoryType = onDidSelectItem != nil ? .disclosureIndicator : .none
+        
         dataSource = UITableViewDiffableDataSource(tableView: tableView, cellProvider: { tableView, indexPath, item in
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: PaginatedListCell<Model>.identifier,
                 for: indexPath) as! PaginatedListCell<Model>
             cell.updateCell(item.model)
-            cell.accessoryType = .disclosureIndicator
+            cell.accessoryType = accessoryType
             return cell
         })
         

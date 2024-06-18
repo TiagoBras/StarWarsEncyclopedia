@@ -1,0 +1,36 @@
+// Common
+
+"common.download-button" = "Descarregar";
+"common.films" = "Filmes";
+"common.people" = "Personagens";
+
+// Film Table View Cell
+
+"film.tvcell.title" = "%@";
+"film.tvcell.episode" = "Episódio %1$d";
+"film.tvcell.director" = "Dirigido por %@";
+"film.tvcell.released" = "Lançado em %@";
+
+// Film's Details
+
+"film.details.director" = "Director(es)";
+"film.details.producer" = "Produtor(es)";
+"film.details.released" = "Data de lançamento";
+"film.details.episode" = "Episódio";
+"film.details.opening_crawl" = "Abertura";
+
+// Person Table View Cell
+
+"person.tvcell.year_of_birth" = "Nascido em %@";
+"person.tvcell.height" = "%@ cm";
+"person.tvcell.weight" = "%@ Kg";
+
+// Person's Details
+
+"person.details.height" = "Altura";
+"person.details.weight" = "Peso";
+"person.details.hair_color" = "Cor do Cabelo";
+"person.details.skin_color" = "Cor da Pele";
+"person.details.eye_color" = "Cor dos Olhos";
+"person.details.gender" = "Género";
+"person.details.year_of_birth" = "Ano de Nascimento";
