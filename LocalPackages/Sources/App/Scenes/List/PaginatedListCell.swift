@@ -34,7 +34,6 @@ public final class PaginatedListCell<Model: PaginatedListCellModel>: UITableView
                 label.textColor = column.color
                 label.textAlignment = column.alignment
                 label.lineBreakMode = column.lineBreakMode
-                label.translatesAutoresizingMaskIntoConstraints = false
                 
                 if let hugging = column.hugging {
                     label.setContentHuggingPriority(hugging.priority, for: hugging.axis)
@@ -51,7 +50,6 @@ public final class PaginatedListCell<Model: PaginatedListCellModel>: UITableView
             stackView.distribution = row.distribution
             stackView.spacing = row.spacing
             stackView.axis = .horizontal
-            stackView.translatesAutoresizingMaskIntoConstraints = false
             
             return stackView
         }
@@ -59,7 +57,7 @@ public final class PaginatedListCell<Model: PaginatedListCellModel>: UITableView
         stackView = UIStackView(arrangedSubviews: rows)
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.distribution = .fill
+        stackView.distribution = .equalSpacing
         stackView.spacing = spec.spacing
         
         contentView.addSubview(stackView)

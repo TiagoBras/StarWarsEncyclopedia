@@ -8,7 +8,7 @@ extension Film: PaginatedListCellModel {
             rows: [
                 .init(
                     columns: [
-                        .headlineLeft,
+                        .headlineLeft.update(\.hugging, .init(priority: .defaultHigh, axis: .horizontal)),
                         .headlineRight.update(\.lineBreakMode, .byTruncatingHead)
                     ],
                     spacing: 2),
