@@ -36,7 +36,5 @@ class SpacingCell: UITableViewCell, Reusable {
     
     func configure(height: CGFloat) {
         heightConstraint.constant = height
-//        updateConstraintsIfNeeded()
-//        layoutIfNeeded()
     }
 }

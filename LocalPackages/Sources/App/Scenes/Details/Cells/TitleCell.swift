@@ -46,7 +46,5 @@ class TitleCell: UITableViewCell, Reusable {
     func configure(title: String?, alignment: NSTextAlignment) {
         titleLabel.text = title
         titleLabel.textAlignment = alignment
-//        textLabel?.sizeToFit()
-//        layoutIfNeeded()
     }
 }
