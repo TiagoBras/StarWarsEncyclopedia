@@ -15,9 +15,13 @@ fileprivate func s(_ key: String, _ comment: String, args: CVarArg...) -> String
 
 extension String.tr {
     public enum common {
-        public static let download = s("common.download-button", "Download Button CTA")
+        public static let retry = s("common.retry_button", "Retry Button CTA")
         public static let films = s("common.films", "Word for films")
         public static let people = s("common.people", "Word for people")
+    }
+    
+    public enum errors {
+        public static let fetchFailed = s("errors.fetch_failed", "Error message shown when fetch fails")
     }
     
     public enum film {

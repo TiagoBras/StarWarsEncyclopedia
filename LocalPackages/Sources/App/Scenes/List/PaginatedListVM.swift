@@ -3,11 +3,16 @@ import Combine
 import StarWarsAPI
 
 final public class PaginatedListVM<Item: StarWarsModel>: @unchecked Sendable {
+    public enum State: Equatable {
+        case idle
+        case loading
+        case error(String)
+    }
+    
     // MARK: - Private Interface
     private let queue = DispatchQueue(label: "PaginatedVM-\(String(describing: Item.self))", attributes: .concurrent)
     private var _items = CurrentValueSubject<[Item], Never>([])
-    private var _isLoading = CurrentValueSubject<Bool, Never>(false)
-    private var _errorMessage = CurrentValueSubject<String?, Never>(nil)
+    private var _state = CurrentValueSubject<State, Never>(.idle)
     private var nextPage: Int? = 1
     private let fetchCallback: PaginatedRequest<Item>
     
@@ -29,11 +34,11 @@ final public class PaginatedListVM<Item: StarWarsModel>: @unchecked Sendable {
     
     public func fetchItems() {
         queue.async(flags: .barrier) { [weak self] in
-            guard let self, let page = nextPage, !_isLoading.value else {
+            guard let self, let page = nextPage, _state.value != .loading else {
                 return
             }
             
-            _isLoading.send(true)
+            _state.send(.loading)
             
             Task { [weak self] in
                 do {
@@ -48,12 +53,13 @@ final public class PaginatedListVM<Item: StarWarsModel>: @unchecked Sendable {
                             self?.nextPage = nil
                         }
                         
-                        self?._isLoading.send(false)
+                        self?._state.send(.idle)
                     }
                 } catch {
                     self?.queue.async(flags: .barrier) { [weak self] in
-                        self?._errorMessage.send("Could not fetch items.")
-                        self?._isLoading.send(false)
+                        // TODO: use unified logging
+                        print("Fetch error: \(error)")
+                        self?._state.send(.error(.tr.errors.fetchFailed))
                     }
                 }
             }
@@ -61,27 +67,23 @@ final public class PaginatedListVM<Item: StarWarsModel>: @unchecked Sendable {
     }
     
     public typealias BindingClosure = (
-        _ items: AnyPublisher<[Item], Never>,
-        _ isLoading: AnyPublisher<Bool, Never>,
-        _ errorMessage: AnyPublisher<String?, Never>
+        _ state: AnyPublisher<State, Never>,
+        _ items: AnyPublisher<[Item], Never>
     ) -> Void
     
     public func bindFields(_ bindingClosure: BindingClosure) {
+        // TODO: replace isLoading with an state enum
         queue.sync {
+            let state = _state
+                .removeDuplicates()
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
             let items = _items
                 .removeDuplicates()
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
-            let isLoading = _isLoading
-                .removeDuplicates()
-                .receive(on: DispatchQueue.main)
-                .eraseToAnyPublisher()
-            let errorMessage = _errorMessage
-                .removeDuplicates()
-                .receive(on: DispatchQueue.main)
-                .eraseToAnyPublisher()
             
-            bindingClosure(items, isLoading, errorMessage)
+            bindingClosure(state, items)
         }
     }
 }

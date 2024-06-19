@@ -1,8 +1,11 @@
 // Common
 
-"common.download-button" = "Download";
+"common.retry_button" = "Retry";
 "common.films" = "Films";
 "common.people" = "People";
+
+// Errors
+"errors.fetch_failed" = "Could not fetch data.\n\nPlease try again later.";
 
 // Film Table View Cell
 

@@ -6,6 +6,11 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
     public typealias OnDidSelectItem = (UIViewController, Model) -> Void
     
     // MARK: - Internal Models
+    enum State {
+        case valid
+        case error(String)
+    }
+    
     enum Section: CaseIterable {
         case main
     }
@@ -16,6 +21,11 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
     private var maxDisplayedCellRow = 0
     private var dataSource: UITableViewDiffableDataSource<Section, Model>!
     private var subscriptions = Set<AnyCancellable>()
+    private var state: State = .valid {
+        didSet {
+            onStateChange(state)
+        }
+    }
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -32,6 +42,15 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
         activity.hidesWhenStopped = true
         activity.frame = CGRect(origin: .zero, size: .init(width: 60, height: 60))
         return activity
+    }()
+    private lazy var errorView: ErrorView = {
+        let errorView = ErrorView { [weak self] in
+            self?.onRetryButtonTap()
+        }
+        errorView.backgroundColor = .swBackground
+        errorView.isHidden = true
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        return errorView
     }()
     
     // MARK: - View Lifecycle
@@ -50,12 +69,18 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
         
         title = viewModel.title
         view.addSubview(tableView)
+        view.addSubview(errorView)
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            
+            errorView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            errorView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+            errorView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
         ])
         
         setupDataSource()
@@ -89,9 +114,25 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
         
     // MARK: - Private interface
     private func setupViewModel() {
-        viewModel.bindFields { items, isLoading, errorMessage in
+        viewModel.bindFields { state, items in
+            state
+                .sink { state in
+                    switch state {
+                    case .idle:
+                        self.state = .valid
+                        self.loadingIndicator.stopAnimating()
+                    case .loading:
+                        self.state = .valid
+                        self.loadingIndicator.startAnimating()
+                    case .error(let message):
+                        self.state = .error(message)
+                        self.loadingIndicator.stopAnimating()
+                    }
+                }
+                .store(in: &subscriptions)
+            
             items
-                .sink { [weak dataSource, maxDisplayedCellRow] films in
+                .sink { [weak dataSource] films in
                     var snapshot = NSDiffableDataSourceSnapshot<Section, Model>()
                     snapshot.appendSections([.main])
                     snapshot.appendItems(films, toSection: .main)
@@ -101,19 +142,9 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
                         return
                     }
                     
-                    // Don't animate during the first load
-                    dataSource.apply(snapshot, animatingDifferences: maxDisplayedCellRow > 0)
+                    dataSource.apply(snapshot, animatingDifferences: true)
                 }
                 .store(in: &subscriptions)
-            
-            isLoading.sink { [weak loadingIndicator] isLoading in
-                if isLoading {
-                    loadingIndicator?.startAnimating()
-                } else {
-                    loadingIndicator?.stopAnimating()
-                }
-            }
-            .store(in: &subscriptions)
         }
         
         if !viewModel.hasLoadedAllItems() {
@@ -132,5 +163,21 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
             cell.accessoryType = accessoryType
             return cell
         })
+    }
+    
+    private func onStateChange(_ newState: State) {
+        switch newState {
+        case .valid:
+            tableView.isHidden = false
+            errorView.isHidden = true
+        case .error(let string):
+            errorView.updateErrorMessage(string)
+            tableView.isHidden = true
+            errorView.isHidden = false
+        }
+    }
+    
+    private func onRetryButtonTap() {
+        viewModel.fetchItems()
     }
 }

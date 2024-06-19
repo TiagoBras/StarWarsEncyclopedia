@@ -1,8 +1,11 @@
 // Common
 
-"common.download-button" = "Descarregar";
+"common.retry_button" = "Tentar Novamente";
 "common.films" = "Filmes";
 "common.people" = "Personagens";
+
+// Errors
+"errors.fetch_failed" = "Não foi possível obter dados.\n\nPor favor, tente novamente mais tarde.";
 
 // Film Table View Cell
 
