@@ -53,7 +53,7 @@ final public class PaginatedListVM<Item: StarWarsModel>: @unchecked Sendable {
                 } catch {
                     self?.queue.async(flags: .barrier) { [weak self] in
                         self?._errorMessage.send("Could not fetch items.")
-                        self?._isLoading.send(true)
+                        self?._isLoading.send(false)
                     }
                 }
             }
