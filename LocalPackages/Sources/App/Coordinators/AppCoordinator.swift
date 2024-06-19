@@ -4,7 +4,7 @@ import StarWarsAPI
 @MainActor
 public class AppCoordinator {
     private let window: UIWindow
-    private let starWarsClient = StarWarsClient.test
+    private let starWarsClient = StarWarsClient.live
     
     public init(window: UIWindow) {
         self.window = window
