@@ -9,13 +9,12 @@
 /* Begin PBXBuildFile section */
 		A51E29152C1CE87500E32C4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51E29142C1CE87500E32C4C /* AppDelegate.swift */; };
 		A51E29172C1CE87500E32C4C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51E29162C1CE87500E32C4C /* SceneDelegate.swift */; };
-		A51E29192C1CE87500E32C4C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51E29182C1CE87500E32C4C /* ViewController.swift */; };
-		A51E291C2C1CE87500E32C4C /* Base in Resources */ = {isa = PBXBuildFile; fileRef = A51E291B2C1CE87500E32C4C /* Base */; };
 		A51E291E2C1CE87600E32C4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A51E291D2C1CE87600E32C4C /* Assets.xcassets */; };
 		A51E29212C1CE87600E32C4C /* Base in Resources */ = {isa = PBXBuildFile; fileRef = A51E29202C1CE87600E32C4C /* Base */; };
 		A51E292C2C1CE87600E32C4C /* StarWarsWorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51E292B2C1CE87600E32C4C /* StarWarsWorldTests.swift */; };
 		A51E29362C1CE87600E32C4C /* StarWarsWorldUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51E29352C1CE87600E32C4C /* StarWarsWorldUITests.swift */; };
 		A51E29382C1CE87600E32C4C /* StarWarsWorldUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51E29372C1CE87600E32C4C /* StarWarsWorldUITestsLaunchTests.swift */; };
+		A5B896DC2C21BB610066D5C1 /* App in Frameworks */ = {isa = PBXBuildFile; productRef = A5B896DB2C21BB610066D5C1 /* App */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +38,6 @@
 		A51E29112C1CE87500E32C4C /* StarWarsWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarWarsWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A51E29142C1CE87500E32C4C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A51E29162C1CE87500E32C4C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		A51E29182C1CE87500E32C4C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		A51E291B2C1CE87500E32C4C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A51E291D2C1CE87600E32C4C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A51E29202C1CE87600E32C4C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A51E29222C1CE87600E32C4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5B896DC2C21BB610066D5C1 /* App in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +81,7 @@
 				A51E292A2C1CE87600E32C4C /* StarWarsWorldTests */,
 				A51E29342C1CE87600E32C4C /* StarWarsWorldUITests */,
 				A51E29122C1CE87500E32C4C /* Products */,
+				A57337B62C1DB605006DF768 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,8 +100,6 @@
 			children = (
 				A51E29142C1CE87500E32C4C /* AppDelegate.swift */,
 				A51E29162C1CE87500E32C4C /* SceneDelegate.swift */,
-				A51E29182C1CE87500E32C4C /* ViewController.swift */,
-				A51E291A2C1CE87500E32C4C /* Main.storyboard */,
 				A51E291D2C1CE87600E32C4C /* Assets.xcassets */,
 				A51E291F2C1CE87600E32C4C /* LaunchScreen.storyboard */,
 				A51E29222C1CE87600E32C4C /* Info.plist */,
@@ -127,6 +124,13 @@
 			path = StarWarsWorldUITests;
 			sourceTree = "<group>";
 		};
+		A57337B62C1DB605006DF768 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,6 +147,9 @@
 			dependencies = (
 			);
 			name = StarWarsWorld;
+			packageProductDependencies = (
+				A5B896DB2C21BB610066D5C1 /* App */,
+			);
 			productName = StarWarsWorld;
 			productReference = A51E29112C1CE87500E32C4C /* StarWarsWorld.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +222,8 @@
 				Base,
 			);
 			mainGroup = A51E29082C1CE87500E32C4C;
+			packageReferences = (
+			);
 			productRefGroup = A51E29122C1CE87500E32C4C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -233,7 +242,6 @@
 			files = (
 				A51E291E2C1CE87600E32C4C /* Assets.xcassets in Resources */,
 				A51E29212C1CE87600E32C4C /* Base in Resources */,
-				A51E291C2C1CE87500E32C4C /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,7 +266,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A51E29192C1CE87500E32C4C /* ViewController.swift in Sources */,
 				A51E29152C1CE87500E32C4C /* AppDelegate.swift in Sources */,
 				A51E29172C1CE87500E32C4C /* SceneDelegate.swift in Sources */,
 			);
@@ -297,14 +304,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		A51E291A2C1CE87500E32C4C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A51E291B2C1CE87500E32C4C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		A51E291F2C1CE87600E32C4C /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -321,6 +320,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -384,6 +384,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -447,9 +448,9 @@
 				INFOPLIST_FILE = StarWarsWorld/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -475,9 +476,9 @@
 				INFOPLIST_FILE = StarWarsWorld/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -607,6 +608,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A5B896DB2C21BB610066D5C1 /* App */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = App;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A51E29092C1CE87500E32C4C /* Project object */;
 }

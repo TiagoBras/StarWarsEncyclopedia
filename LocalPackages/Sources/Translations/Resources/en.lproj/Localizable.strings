@@ -1,0 +1,39 @@
+// Common
+
+"common.retry_button" = "Retry";
+"common.films" = "Films";
+"common.people" = "People";
+
+// Errors
+"errors.fetch_failed" = "Could not fetch data.\n\nPlease try again later.";
+
+// Film Table View Cell
+
+"film.tvcell.title" = "%@";
+"film.tvcell.episode" = "Episode %1$d";
+"film.tvcell.director" = "Directed by %@";
+"film.tvcell.released" = "Released by %@";
+
+// Film's Details
+
+"film.details.director" = "Director(s)";
+"film.details.producer" = "Producer(s)";
+"film.details.released" = "Release Date";
+"film.details.episode" = "Episode";
+"film.details.opening_crawl" = "Opening Crawl";
+
+// Person Table View Cell
+
+"person.tvcell.year_of_birth" = "Born in %@";
+"person.tvcell.height" = "%@ cm";
+"person.tvcell.weight" = "%@ Kg";
+
+// Person's Details
+
+"person.details.height" = "Height";
+"person.details.weight" = "Weight";
+"person.details.hair_color" = "Hair Color";
+"person.details.skin_color" = "Skin Color";
+"person.details.eye_color" = "Eye Color";
+"person.details.gender" = "Gender";
+"person.details.year_of_birth" = "Year of Birth";
