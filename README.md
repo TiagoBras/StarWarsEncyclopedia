@@ -80,7 +80,7 @@ extension Vehicle: HasViewControllerTitle {
 
 ## Step 4 - Add view controller to HomeVC's viewControllers
 
-In the same, file change:
+In the same file, change:
 
 ```swift
 func homeScene() -> UIViewController {
