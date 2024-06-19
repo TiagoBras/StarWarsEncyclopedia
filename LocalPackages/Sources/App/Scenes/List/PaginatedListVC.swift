@@ -2,11 +2,6 @@ import UIKit
 import StarWarsAPI
 import Combine
 
-struct PaginatedListItem<Model: StarWarsModel>: Hashable {
-    var id: Int
-    var model: Model
-}
-
 class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewController, UITableViewDelegate {
     public typealias OnDidSelectItem = (UIViewController, Model) -> Void
     
@@ -19,7 +14,7 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
     private let viewModel: PaginatedListVM<Model>
     private let onDidSelectItem: OnDidSelectItem?
     private var maxDisplayedCellRow = 0
-    private var dataSource: UITableViewDiffableDataSource<Section, PaginatedListItem<Model>>!
+    private var dataSource: UITableViewDiffableDataSource<Section, Model>!
     private var subscriptions = Set<AnyCancellable>()
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -69,7 +64,7 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
     
     // MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let model = dataSource.itemIdentifier(for: indexPath)?.model else { return }
+        guard let model = dataSource.itemIdentifier(for: indexPath) else { return }
         
         onDidSelectItem?(self, model)
         
@@ -96,10 +91,8 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
     private func setupViewModel() {
         viewModel.bindFields { items, isLoading, errorMessage in
             items
-                .map { films in films.enumerated() }
-                .map { enumeratedFilms in enumeratedFilms.map { PaginatedListItem(id: $0.offset, model: $0.element) }}
                 .sink { [weak dataSource, maxDisplayedCellRow] films in
-                    var snapshot = NSDiffableDataSourceSnapshot<Section, PaginatedListItem<Model>>()
+                    var snapshot = NSDiffableDataSourceSnapshot<Section, Model>()
                     snapshot.appendSections([.main])
                     snapshot.appendItems(films, toSection: .main)
                     
@@ -135,7 +128,7 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: PaginatedListCell<Model>.identifier,
                 for: indexPath) as! PaginatedListCell<Model>
-            cell.updateCell(item.model)
+            cell.updateCell(item)
             cell.accessoryType = accessoryType
             return cell
         })
