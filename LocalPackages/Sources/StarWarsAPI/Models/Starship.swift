@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Starship: Codable {
+public struct Starship: StarWarsModel {
     public let name: String
     public let model: String
     public let manufacturer: String

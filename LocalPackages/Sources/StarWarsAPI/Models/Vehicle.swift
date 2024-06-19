@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Vehicle: Codable {
+public struct Vehicle: StarWarsModel {
     public let name: String
     public let model: String
     public let manufacturer: String

@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Species: Codable {
+public struct Species: StarWarsModel {
     public let name: String
     public let classification: String
     public let designation: String
@@ -9,7 +9,7 @@ public struct Species: Codable {
     public let hairColors: String
     public let eyeColors: String
     public let averageLifespan: String
-    public let homeworld: String
+    public let homeworld: URL?
     public let language: String
     public let people: [URL]
     public let films: [URL]
