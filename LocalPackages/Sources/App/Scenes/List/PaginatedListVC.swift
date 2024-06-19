@@ -141,8 +141,8 @@ class PaginatedListVC<Model: PaginatedListCellModel & StarWarsModel>: UIViewCont
                         assertionFailure("DataSource should NOT be nil by now")
                         return
                     }
-                    
-                    dataSource.apply(snapshot, animatingDifferences: true)
+
+                    dataSource.apply(snapshot, animatingDifferences: false)
                 }
                 .store(in: &subscriptions)
         }
