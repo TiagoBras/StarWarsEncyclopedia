@@ -29,6 +29,20 @@ extension Film: PaginatedListCellModel {
     }
 }
 
+extension Vehicle: PaginatedListCellModel {
+    public static func specification() -> CellSpecification {
+        CellSpecification(
+            rows: [
+                .init(columns: [.headlineLeft]),
+                .init(columns: [.subheadlineLeft])
+            ])
+    }
+    
+    public func textLabels() -> [String?] {
+        [name, model]
+    }
+}
+
 extension Person: PaginatedListCellModel {
     public static func specification() -> CellSpecification {
         return CellSpecification(

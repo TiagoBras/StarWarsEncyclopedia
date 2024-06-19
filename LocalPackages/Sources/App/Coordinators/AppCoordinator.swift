@@ -23,6 +23,7 @@ private extension AppCoordinator {
         homeVC.viewControllers = [
             paginatedListScene(starWarsClient.getFilms),
             paginatedListScene(starWarsClient.getPeople),
+            paginatedListScene(starWarsClient.getVehicles),
         ]
         return homeVC
     }
@@ -70,4 +71,8 @@ extension Film: HasViewControllerTitle {
 
 extension Person: HasViewControllerTitle {
     static var viewControllerTitle: String { .tr.common.people }
+}
+
+extension Vehicle: HasViewControllerTitle {
+    static var viewControllerTitle: String { "Vehicles" }
 }
