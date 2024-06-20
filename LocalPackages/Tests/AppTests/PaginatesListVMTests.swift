@@ -17,12 +17,11 @@ class PaginatesListVMTests: XCTestCase {
     
     private func assertViewModel<T: StarWarsModel>(_ callback: @escaping PaginatedRequest<T>) async throws {
         let itemsExpectation = expectation(description: "\(#function).items")
-        let isLoadingExpectation = expectation(description: "\(#function).isLoading")
-        let errorExpectation = expectation(description: "\(#function).error")
+        let stateExpectation = expectation(description: "\(#function).state")
         let title = UUID().uuidString
         let vm = PaginatedListVM(title: title, fetchCallback: callback)
         var rowsFetchedHistory: [Int] = []
-        var isLoadingHistory: [Bool] = []
+        var stateHistory: [PaginatedListVM<T>.State] = []
         var subs = Set<AnyCancellable>()
         
         XCTAssertEqual(vm.title, title)
@@ -30,7 +29,7 @@ class PaginatesListVMTests: XCTestCase {
         XCTAssertEqual(vm.numberOfItemsLoaded(), 0)
         
         // Store history of values so that we can compare it later and see if it's behaving as expected
-        vm.bindFields { items, isLoading, errorMessage in
+        vm.bindFields { state, items in
             items.sink { people in
                 rowsFetchedHistory.append(people.count)
                 
@@ -42,31 +41,31 @@ class PaginatesListVMTests: XCTestCase {
             }
             .store(in: &subs)
             
-            isLoading.sink { isLoading in
-                isLoadingHistory.append(isLoading)
+            state.sink { state in
+                stateHistory.append(state)
                 
-                if vm.hasLoadedAllItems() && !isLoading {
-                    isLoadingExpectation.fulfill()
+                if vm.hasLoadedAllItems() {
+                    stateExpectation.fulfill()
                 }
-            }
-            .store(in: &subs)
-            
-            errorMessage.sink { errorMessage in
-                XCTAssertNil(errorMessage)
-                errorExpectation.fulfill()
             }
             .store(in: &subs)
         }
         
         vm.fetchItems()
         
-        await fulfillment(of: [itemsExpectation, isLoadingExpectation, errorExpectation], timeout: 5)
+        await fulfillment(of: [itemsExpectation, stateExpectation], timeout: 5)
         
         let expectedItemsHistory = try await expectedFetchedRowsHistory(callback)
         XCTAssertEqual(rowsFetchedHistory, expectedItemsHistory)
         
-        let expectedIsLoadingHistory = Array(repeating: [false, true], count: expectedItemsHistory.count - 1).flatMap({$0}) + [false]
-        XCTAssertEqual(isLoadingHistory, expectedIsLoadingHistory)
+        // States should go .idle, .loading, .idle, .loading, .idle, ...
+        for (i, state) in stateHistory.enumerated() {
+            if i.isMultiple(of: 2) {
+                XCTAssertEqual(state, .idle)
+            } else {
+                XCTAssertEqual(state, .loading)
+            }
+        }
     }
     
     private func expectedFetchedRowsHistory<T: StarWarsModel>(_ callback: PaginatedRequest<T>) async throws -> [Int] {
