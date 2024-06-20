@@ -1,0 +1,47 @@
+{
+  "configurations" : [
+    {
+      "id" : "9F1565E9-E156-4FDF-9495-C479553CF550",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:LocalPackages",
+        "identifier" : "AppTests",
+        "name" : "AppTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:LocalPackages",
+        "identifier" : "StarWarsAPITests",
+        "name" : "StarWarsAPITests"
+      }
+    },
+    {
+      "enabled" : false,
+      "target" : {
+        "containerPath" : "container:StarWarsWorld.xcodeproj",
+        "identifier" : "A51E29262C1CE87600E32C4C",
+        "name" : "StarWarsWorldTests"
+      }
+    },
+    {
+      "enabled" : false,
+      "target" : {
+        "containerPath" : "container:StarWarsWorld.xcodeproj",
+        "identifier" : "A51E29302C1CE87600E32C4C",
+        "name" : "StarWarsWorldUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -46,6 +46,7 @@
 		A51E29312C1CE87600E32C4C /* StarWarsWorldUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StarWarsWorldUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A51E29352C1CE87600E32C4C /* StarWarsWorldUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarWarsWorldUITests.swift; sourceTree = "<group>"; };
 		A51E29372C1CE87600E32C4C /* StarWarsWorldUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarWarsWorldUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A5E758542C2430BE00BEAB94 /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +99,7 @@
 		A51E29132C1CE87500E32C4C /* StarWarsWorld */ = {
 			isa = PBXGroup;
 			children = (
+				A5E758542C2430BE00BEAB94 /* TestPlan.xctestplan */,
 				A51E29142C1CE87500E32C4C /* AppDelegate.swift */,
 				A51E29162C1CE87500E32C4C /* SceneDelegate.swift */,
 				A51E291D2C1CE87600E32C4C /* Assets.xcassets */,
@@ -223,6 +225,7 @@
 			);
 			mainGroup = A51E29082C1CE87500E32C4C;
 			packageReferences = (
+				A5E758552C24316B00BEAB94 /* XCLocalSwiftPackageReference "LocalPackages" */,
 			);
 			productRefGroup = A51E29122C1CE87500E32C4C /* Products */;
 			projectDirPath = "";
@@ -608,6 +611,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		A5E758552C24316B00BEAB94 /* XCLocalSwiftPackageReference "LocalPackages" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = LocalPackages;
+		};
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		A5B896DB2C21BB610066D5C1 /* App */ = {
