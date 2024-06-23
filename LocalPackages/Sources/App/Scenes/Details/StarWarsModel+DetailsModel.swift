@@ -42,3 +42,24 @@ extension Person: DetailsModel {
         ]
     }
 }
+
+extension Vehicle: DetailsModel {
+    var modelTitle: String {
+        name
+    }
+    
+    var modelCells: [DetailsModelCell] {
+        [
+            .spacing(20),
+            .titleDetails("Model", model),
+            .titleDetails("Manufacturer", manufacturer),
+            .titleDetails("Cost in Credits", costInCredits),
+            .separator,
+            .titleDetails("Length", length),
+            .titleDetails("Max Atmosphering Speed", maxAtmospheringSpeed),
+            .titleDetails("Crew", crew),
+            .titleDetails("Passengers", passengers),
+            .titleDetails("Cargo Capacity", cargoCapacity),
+        ]
+    }
+}
